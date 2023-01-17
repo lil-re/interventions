@@ -50,12 +50,13 @@ class Event {
     }
 
     static printAvailabilities (results) {
-        console.log("Availabilities :");
+        let text = "\nAvailabilities :\n"
         results.forEach((result) => {
             const start = new Date(result[0])
             const end = new Date(result[1])
-            console.log(`From ${start.toDateString()} ${start.toTimeString()} to ${end.toDateString()} ${end.toTimeString()}`);
+            text = `${text}From ${start.toDateString()} ${start.toTimeString()} to ${end.toDateString()} ${end.toTimeString()}\n`;
         })
+        return text
     }
 
     static openings () {
@@ -78,7 +79,8 @@ class Event {
         const interventions = Event.interventions()
         const checkedOpenings = Event.checkOpenings(openings, fromTimestamp, toTimestamp)
         const availabilities = Event.generateAvailabilities(checkedOpenings, interventions)
-        Event.printAvailabilities(availabilities)
+        const text = Event.printAvailabilities(availabilities)
+        console.log(text);
     }
 }
 
