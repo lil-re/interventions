@@ -31,6 +31,7 @@ test('Group all interventions and transform their dates into timestamps', () => 
 test('Check openings and reload the old ones if it is necessary', () => {
     const openings = Event.openings()
     const checkedOpenings = Event.checkOpenings(openings, 1467619200000, 1468137600000)
+    
     expect(checkedOpenings).not.toStrictEqual(openings)
     expect(checkedOpenings).toStrictEqual([
         [
@@ -45,6 +46,7 @@ test('Generate the availabilities', () => {
     const interventions = Event.interventions()
     const checkedOpenings = Event.checkOpenings(openings, 1467619200000, 1468137600000)
     const availabilities = Event.generateAvailabilities(checkedOpenings, interventions)
+
     expect(availabilities).toStrictEqual([
         [
             1467966600000,
@@ -63,6 +65,7 @@ test('Print the availabilities', () => {
     const checkedOpenings = Event.checkOpenings(openings, 1467619200000, 1468137600000)
     const availabilities = Event.generateAvailabilities(checkedOpenings, interventions)
     const text = Event.printAvailabilities(availabilities)
+
     expect(text).toBe(`
 Availabilities :
 From Fri Jul 08 2016 10:30:00 GMT+0200 (heure d’été d’Europe centrale) to Fri Jul 08 2016 11:30:00 GMT+0200 (heure d’été d’Europe centrale)

@@ -6,12 +6,13 @@ class Event {
         this.recurring = recurring;
         this.startDate = startDate;
         this.endDate = endDate;
-    
+
         eventList.push(this);
     }
 
     static checkOpenings (openings, fromTimestamp, toTimestamp) {
         const matchingOpenings = openings.filter(opening => opening[0] >= fromTimestamp && opening[1] <= toTimestamp)
+
         if (matchingOpenings.length === 0) {
             eventList
                 .filter(event => event.opening && event.recurring && event.endDate.getTime() < fromTimestamp)
@@ -21,8 +22,10 @@ class Event {
                     const newEnd = event.endDate.getDate() + 7;
                     event.endDate.setDate(newEnd)
                 })
+
             return Event.openings()
         }
+
         return openings
     }
 
@@ -31,6 +34,7 @@ class Event {
 
         openings.forEach(opening => {
             interventions.forEach(intervention => {
+
                 if (intervention[0] >= opening[0] && intervention[1] <= opening[1]) {
                     for (let i = 0; i < results.length; i++) {
                         const result = results[i]
@@ -46,16 +50,19 @@ class Event {
                 }
             })
         })
+
         return results
     }
 
     static printAvailabilities (results) {
         let text = "\nAvailabilities :\n"
+
         results.forEach((result) => {
             const start = new Date(result[0])
             const end = new Date(result[1])
             text = `${text}From ${start.toDateString()} ${start.toTimeString()} to ${end.toDateString()} ${end.toTimeString()}\n`;
         })
+        
         return text
     }
 
@@ -80,6 +87,7 @@ class Event {
         const checkedOpenings = Event.checkOpenings(openings, fromTimestamp, toTimestamp)
         const availabilities = Event.generateAvailabilities(checkedOpenings, interventions)
         const text = Event.printAvailabilities(availabilities)
+
         console.log(text);
     }
 }
